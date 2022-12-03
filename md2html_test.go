@@ -25,7 +25,7 @@ type convertTestArgs struct {
 	output convertOutputArgs
 }
 
-const stylePathPattern string = "styles/github-markdown-css/dist/github-%s.css"
+const stylePathPattern string = "styles/github-%s.css"
 
 var convertTests = []convertTestArgs{
 	{
