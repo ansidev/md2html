@@ -1,6 +1,6 @@
 module github.com/ansidev/md2html
 
-go 1.19
+go 1.17
 
 require (
 	github.com/adrg/frontmatter v0.2.0
