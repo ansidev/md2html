@@ -13,7 +13,7 @@ type mdcInputArgs struct {
 
 type mdcOutputArgs struct {
 	title       string
-	frontmatter map[string]any
+	frontmatter map[string]interface{}
 	markdown    string
 	html        string
 }
@@ -55,17 +55,17 @@ Paragraphs are separated by a blank line.
 		},
 		output: mdcOutputArgs{
 			title: "Post title",
-			frontmatter: map[string]any{
+			frontmatter: map[string]interface{}{
 				"layout":  "default",
 				"slug":    "post-slug",
 				"author":  "Fake Name",
 				"pubDate": "2022-01-01T00:00:00+07:00",
-				"keywords": []any{
+				"keywords": []interface{}{
 					"key word 01",
 					"key word 02",
 				},
 				"customKey": "custom value",
-				"customArray": []any{
+				"customArray": []interface{}{
 					"element 01",
 					"element 02",
 				},
@@ -110,17 +110,17 @@ Paragraphs are separated by a blank line.
 		},
 		output: mdcOutputArgs{
 			title: "Post title",
-			frontmatter: map[string]any{
+			frontmatter: map[string]interface{}{
 				"layout":  "default",
 				"slug":    "post-slug",
 				"author":  "Fake Name",
 				"pubDate": "2022-01-01T00:00:00+07:00",
-				"keywords": []any{
+				"keywords": []interface{}{
 					"key word 01",
 					"key word 02",
 				},
 				"customKey": "custom value",
-				"customArray": []any{
+				"customArray": []interface{}{
 					"element 01",
 					"element 02",
 				},
@@ -145,7 +145,7 @@ Paragraphs are separated by a blank line.
 		},
 		output: mdcOutputArgs{
 			title:       "An h1 header",
-			frontmatter: map[string]any{},
+			frontmatter: map[string]interface{}{},
 			markdown: `# An h1 header
 
 Paragraphs are separated by a blank line.

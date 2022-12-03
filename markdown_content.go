@@ -12,12 +12,12 @@ import (
 )
 
 type markdownContent struct {
-	frontmatter map[string]any
+	frontmatter map[string]interface{}
 	content     string
 }
 
 func newMarkdownContent(bytes []byte, excerptSeparator string) (*markdownContent, error) {
-	frontmatter := make(map[string]any)
+	frontmatter := make(map[string]interface{})
 
 	contentBytes, err := fm.Parse(strings.NewReader(string(bytes)), &frontmatter)
 	if err != nil {
@@ -57,7 +57,7 @@ func newMarkdownContent(bytes []byte, excerptSeparator string) (*markdownContent
 	return &markdownContent{frontmatter, content}, nil
 }
 
-func (c *markdownContent) field(key string) any {
+func (c *markdownContent) field(key string) interface{} {
 	if key == "title" {
 		return c.title()
 	}
