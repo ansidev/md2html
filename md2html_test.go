@@ -3,23 +3,12 @@ package md2html
 import (
 	"fmt"
 	"os"
-	"runtime"
 	"strings"
 	"testing"
 
+	"github.com/ansidev/md2html/utils"
 	"github.com/stretchr/testify/require"
 )
-
-func eol() string {
-	if runtime.GOOS == "windows" {
-		return "\r\n"
-	}
-	return "\n"
-}
-
-func osBasedStr(s string) string {
-	return strings.ReplaceAll(s, "{{EOL}}", eol())
-}
 
 type convertInputArgs struct {
 	markdown string
@@ -86,7 +75,7 @@ var convertTests = []convertTestArgs{
 func Test_Convert(t *testing.T) {
 	for _, tt := range convertTests {
 		t.Run(tt.name, func(t *testing.T) {
-			markdown := osBasedStr(tt.input.markdown)
+			markdown := utils.OSBasedStr(tt.input.markdown)
 			html, err := Convert([]byte(markdown), tt.input.options)
 			require.NoError(t, err)
 
@@ -94,7 +83,7 @@ func Test_Convert(t *testing.T) {
 			require.NoError(t, err1)
 			require.True(t, len(b) > 0, "Style must have content")
 
-			htmlWithoutStyle := osBasedStr(tt.output.htmlWithoutStyle)
+			htmlWithoutStyle := utils.OSBasedStr(tt.output.htmlWithoutStyle)
 			expectedHtml := strings.Replace(htmlWithoutStyle, "{{.Style}}", string(b), 1)
 
 			require.Equal(t, expectedHtml, html)

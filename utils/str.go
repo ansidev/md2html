@@ -11,12 +11,15 @@ var headingRegex = regexp.MustCompile(`([#]+\s)`)
 var lineEndingWindowsRegex = regexp.MustCompile(`(?m)^[\r\n]+`)
 var lineEndingUnixRegex = regexp.MustCompile(`(?m)^[\n]+`)
 
-func LineEnding() string {
+func EOL() string {
 	if runtime.GOOS == "windows" {
 		return "\r\n"
 	}
-	// return "\r\n"
 	return "\n"
+}
+
+func OSBasedStr(s string) string {
+	return strings.ReplaceAll(s, "{{EOL}}", EOL())
 }
 
 func GetFirstLine(s string) string {
@@ -40,7 +43,7 @@ func AppendIndentation(s string, indentString string) string {
 			buf.WriteString(sc.Text())
 			isFirstLine = false
 		} else {
-			buf.WriteString(LineEnding())
+			buf.WriteString(EOL())
 			buf.WriteString(indentString)
 			buf.WriteString(sc.Text())
 		}
@@ -51,7 +54,7 @@ func AppendIndentation(s string, indentString string) string {
 
 func TrimBlankLines(s string) string {
 	lineEndingRegex := lineEndingUnixRegex
-	lineEnding := LineEnding()
+	lineEnding := EOL()
 	if runtime.GOOS == "windows" {
 		lineEndingRegex = lineEndingWindowsRegex
 	}
@@ -62,5 +65,5 @@ func TrimBlankLines(s string) string {
 }
 
 func TrimAllLineEndingChars(s string) string {
-	return strings.ReplaceAll(s, LineEnding(), "")
+	return strings.ReplaceAll(s, EOL(), "")
 }

@@ -98,7 +98,7 @@ func (c *markdownContent) htmlWithIndentation(indentString string) string {
 		return ""
 	}
 
-	s := strings.TrimSuffix(buf.String(), utils.LineEnding())
+	s := strings.TrimSuffix(buf.String(), utils.EOL())
 
 	return utils.AppendIndentation(s, indentString)
 }

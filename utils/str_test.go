@@ -1,23 +1,10 @@
 package utils
 
 import (
-	"runtime"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
-
-func eol() string {
-	if runtime.GOOS == "windows" {
-		return "\r\n"
-	}
-	return "\n"
-}
-
-func osBasedStr(s string) string {
-	return strings.ReplaceAll(s, "{{EOL}}", eol())
-}
 
 func Test_GetFirstLine(t *testing.T) {
 	type args struct {
@@ -96,9 +83,9 @@ func Test_AppendIndentation(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := osBasedStr(tt.args.s)
+			s := OSBasedStr(tt.args.s)
 			got := AppendIndentation(s, tt.args.indentString)
-			want := osBasedStr(tt.want)
+			want := OSBasedStr(tt.want)
 			require.Equal(t, want, got)
 		})
 	}
@@ -130,9 +117,9 @@ func TestTrimBlankLines(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := osBasedStr(tt.args.s)
+			s := OSBasedStr(tt.args.s)
 			got := TrimBlankLines(s)
-			want := osBasedStr(tt.want)
+			want := OSBasedStr(tt.want)
 			require.Equal(t, want, got)
 		})
 	}
@@ -157,7 +144,7 @@ func TestTrimAllLineEndingChars(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := osBasedStr(tt.args.s)
+			s := OSBasedStr(tt.args.s)
 			got := TrimAllLineEndingChars(s)
 			require.Equal(t, tt.want, got)
 		})

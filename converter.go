@@ -3,12 +3,14 @@ package md2html
 import (
 	"bytes"
 	"text/template"
+
+	"github.com/ansidev/md2html/utils"
 )
 
 func compileToHTML(templateCtx htmlTemplateContext, options Options) ([]byte, error) {
 	htmlTemplate := options.HTMLTemplate
 	if len(htmlTemplate) == 0 {
-		htmlTemplate = defaultHTMLTemplate
+		htmlTemplate = utils.OSBasedStr(defaultHTMLTemplate)
 	}
 
 	tmpl, err := template.New("markdown").Parse(htmlTemplate)

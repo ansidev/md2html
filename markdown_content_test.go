@@ -3,6 +3,7 @@ package md2html
 import (
 	"testing"
 
+	"github.com/ansidev/md2html/utils"
 	"github.com/stretchr/testify/require"
 )
 
@@ -99,7 +100,7 @@ var mdcTests = []mdcTestArgs{
 func Test_markdownContent_Frontmatter(t *testing.T) {
 	for _, tt := range mdcTests {
 		t.Run(tt.name, func(t *testing.T) {
-			markdown := osBasedStr(tt.input.markdown)
+			markdown := utils.OSBasedStr(tt.input.markdown)
 			mdc, err := newMarkdownContent([]byte(markdown), tt.input.excerptSeparator)
 
 			require.NoError(t, err)
@@ -113,7 +114,7 @@ func Test_markdownContent_Frontmatter(t *testing.T) {
 func Test_markdownContent_Title(t *testing.T) {
 	for _, tt := range mdcTests {
 		t.Run(tt.name, func(t *testing.T) {
-			markdown := osBasedStr(tt.input.markdown)
+			markdown := utils.OSBasedStr(tt.input.markdown)
 			mdc, err := newMarkdownContent([]byte(markdown), tt.input.excerptSeparator)
 
 			require.NoError(t, err)
@@ -125,11 +126,11 @@ func Test_markdownContent_Title(t *testing.T) {
 func Test_markdownContent_Markdown(t *testing.T) {
 	for _, tt := range mdcTests {
 		t.Run(tt.name, func(t *testing.T) {
-			markdown := osBasedStr(tt.input.markdown)
+			markdown := utils.OSBasedStr(tt.input.markdown)
 			mdc, err := newMarkdownContent([]byte(markdown), tt.input.excerptSeparator)
 
 			require.NoError(t, err)
-			outputMarkdown := osBasedStr(tt.output.markdown)
+			outputMarkdown := utils.OSBasedStr(tt.output.markdown)
 			require.Equal(t, outputMarkdown, mdc.markdown())
 		})
 	}
@@ -138,11 +139,11 @@ func Test_markdownContent_Markdown(t *testing.T) {
 func Test_markdownContent_HTML(t *testing.T) {
 	for _, tt := range mdcTests {
 		t.Run(tt.name, func(t *testing.T) {
-			markdown := osBasedStr(tt.input.markdown)
+			markdown := utils.OSBasedStr(tt.input.markdown)
 			mdc, err := newMarkdownContent([]byte(markdown), tt.input.excerptSeparator)
 
 			require.NoError(t, err)
-			html := osBasedStr(tt.output.html)
+			html := utils.OSBasedStr(tt.output.html)
 			require.Equal(t, html, mdc.html())
 		})
 	}
