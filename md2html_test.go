@@ -3,11 +3,23 @@ package md2html
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
+
+func eol() string {
+	if runtime.GOOS == "windows" {
+		return "\r\n"
+	}
+	return "\n"
+}
+
+func osBasedStr(s string) string {
+	return strings.ReplaceAll(s, "{{EOL}}", eol())
+}
 
 type convertInputArgs struct {
 	markdown string
@@ -30,29 +42,7 @@ var convertTests = []convertTestArgs{
 	{
 		name: "markdownContent with full options",
 		input: convertInputArgs{
-			markdown: `---
-layout: default
-title: Post title
-slug: post-slug
-author: Fake Name
-pubDate: "2022-01-01T00:00:00+07:00"
-keywords:
-- key word 01
-- key word 02
-customKey: custom value
-customArray:
-- element 01
-- element 02
----
-
-Post excerpt
-
-<!-- more -->
-
-# An h1 header
-
-Paragraphs are separated by a blank line.
-`,
+			markdown: `---{{EOL}}layout: default{{EOL}}title: Post title{{EOL}}slug: post-slug{{EOL}}author: Fake Name{{EOL}}pubDate: "2022-01-01T00:00:00+07:00"{{EOL}}keywords:{{EOL}}- key word 01{{EOL}}- key word 02{{EOL}}customKey: custom value{{EOL}}customArray:{{EOL}}- element 01{{EOL}}- element 02{{EOL}}---{{EOL}}{{EOL}}Post excerpt{{EOL}}{{EOL}}<!-- more -->{{EOL}}{{EOL}}# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{
 				ExcerptSeparator: "<!-- more -->",
 				Style:            "light",
@@ -60,50 +50,13 @@ Paragraphs are separated by a blank line.
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Post title</title>
-  <style>{{.Style}}</style>
-  <style>body { padding : 15px; }</style>
-</head>
-
-<body class="markdown-body">
-  <h1 id="an-h1-header">An h1 header</h1>
-  <p>Paragraphs are separated by a blank line.</p>
-</body>
-</html>
-`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 	{
 		name: "markdownContent with full options and frontmatter has comments",
 		input: convertInputArgs{
-			markdown: `---
-# Layout name
-layout: default
-title: Post title # post title
-slug: post-slug
-author: Fake Name
-pubDate: "2022-01-01T00:00:00+07:00"
-keywords:
-- key word 01
-- key word 02
-customKey: custom value
-customArray:
-- element 01
-- element 02
----
-
-Post excerpt
-
-<!-- more -->
-
-# An h1 header
-
-Paragraphs are separated by a blank line.
-`,
+			markdown: `---{{EOL}}# Layout name{{EOL}}layout: default{{EOL}}title: Post title # post title{{EOL}}slug: post-slug{{EOL}}author: Fake Name{{EOL}}pubDate: "2022-01-01T00:00:00+07:00"{{EOL}}keywords:{{EOL}}- key word 01{{EOL}}- key word 02{{EOL}}customKey: custom value{{EOL}}customArray:{{EOL}}- element 01{{EOL}}- element 02{{EOL}}---{{EOL}}{{EOL}}Post excerpt{{EOL}}{{EOL}}<!-- more -->{{EOL}}{{EOL}}# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{
 				ExcerptSeparator: "<!-- more -->",
 				Style:            "light",
@@ -111,30 +64,13 @@ Paragraphs are separated by a blank line.
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Post title</title>
-  <style>{{.Style}}</style>
-  <style>body { padding : 15px; }</style>
-</head>
-
-<body class="markdown-body">
-  <h1 id="an-h1-header">An h1 header</h1>
-  <p>Paragraphs are separated by a blank line.</p>
-</body>
-</html>
-`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 	{
 		name: "markdownContent without frontmatter",
 		input: convertInputArgs{
-			markdown: `# An h1 header
-
-Paragraphs are separated by a blank line.
-`,
+			markdown: `# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{
 				ExcerptSeparator: "",
 				Style:            "light",
@@ -142,21 +78,7 @@ Paragraphs are separated by a blank line.
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>An h1 header</title>
-  <style>{{.Style}}</style>
-  <style>body { padding : 15px; }</style>
-</head>
-
-<body class="markdown-body">
-  <h1 id="an-h1-header">An h1 header</h1>
-  <p>Paragraphs are separated by a blank line.</p>
-</body>
-</html>
-`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>An h1 header</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 }
@@ -164,14 +86,16 @@ Paragraphs are separated by a blank line.
 func Test_Convert(t *testing.T) {
 	for _, tt := range convertTests {
 		t.Run(tt.name, func(t *testing.T) {
-			html, err := Convert([]byte(tt.input.markdown), tt.input.options)
+			markdown := osBasedStr(tt.input.markdown)
+			html, err := Convert([]byte(markdown), tt.input.options)
 			require.NoError(t, err)
 
 			b, err1 := os.ReadFile(fmt.Sprintf(stylePathPattern, tt.input.options.Style))
 			require.NoError(t, err1)
 			require.True(t, len(b) > 0, "Style must have content")
 
-			expectedHtml := strings.Replace(tt.output.htmlWithoutStyle, "{{.Style}}", string(b), 1)
+			htmlWithoutStyle := osBasedStr(tt.output.htmlWithoutStyle)
+			expectedHtml := strings.Replace(htmlWithoutStyle, "{{.Style}}", string(b), 1)
 
 			require.Equal(t, expectedHtml, html)
 		})

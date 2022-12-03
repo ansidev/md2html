@@ -1,12 +1,23 @@
-//go:build !windows
-
 package utils
 
 import (
+	"runtime"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
+
+func eol() string {
+	if runtime.GOOS == "windows" {
+		return "\r\n"
+	}
+	return "\n"
+}
+
+func osBasedStr(s string) string {
+	return strings.ReplaceAll(s, "{{EOL}}", eol())
+}
 
 func Test_GetFirstLine(t *testing.T) {
 	type args struct {
@@ -69,28 +80,26 @@ func Test_AppendIndentation(t *testing.T) {
 		{
 			name: "String indent",
 			args: args{
-				s: `<p>Paragraph 1</p>
-<p>Paragraph 2</p>`,
+				s:            "<p>Paragraph 1</p>{{EOL}}<p>Paragraph 2</p>",
 				indentString: "  ",
 			},
-			want: `  <p>Paragraph 1</p>
-  <p>Paragraph 2</p>`,
+			want: "  <p>Paragraph 1</p>{{EOL}}  <p>Paragraph 2</p>",
 		},
 		{
 			name: "Tab indent",
 			args: args{
-				s: `<p>Paragraph 1</p>
-<p>Paragraph 2</p>`,
+				s:            "<p>Paragraph 1</p>{{EOL}}<p>Paragraph 2</p>",
 				indentString: "	",
 			},
-			want: `	<p>Paragraph 1</p>
-	<p>Paragraph 2</p>`,
+			want: "	<p>Paragraph 1</p>{{EOL}}	<p>Paragraph 2</p>",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := AppendIndentation(tt.args.s, tt.args.indentString)
-			require.Equal(t, tt.want, got)
+			s := osBasedStr(tt.args.s)
+			got := AppendIndentation(s, tt.args.indentString)
+			want := osBasedStr(tt.want)
+			require.Equal(t, want, got)
 		})
 	}
 }
@@ -107,33 +116,24 @@ func TestTrimBlankLines(t *testing.T) {
 		{
 			name: "Paragraph with blank lines",
 			args: args{
-				s: `Line 1
-
-
-Line 2`,
+				s: "Line 1{{EOL}}{{EOL}}{{EOL}}Line 2",
 			},
-			want: `Line 1
-
-Line 2`,
+			want: "Line 1{{EOL}}{{EOL}}Line 2",
 		},
 		{
 			name: "Paragraph starts with blank lines",
 			args: args{
-				s: `
-Line 1
-
-
-Line 2`,
+				s: "{{EOL}}Line 1{{EOL}}{{EOL}}{{EOL}}Line 2",
 			},
-			want: `Line 1
-
-Line 2`,
+			want: "Line 1{{EOL}}{{EOL}}Line 2",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := TrimBlankLines(tt.args.s)
-			require.Equal(t, tt.want, got)
+			s := osBasedStr(tt.args.s)
+			got := TrimBlankLines(s)
+			want := osBasedStr(tt.want)
+			require.Equal(t, want, got)
 		})
 	}
 }
@@ -150,16 +150,15 @@ func TestTrimAllLineEndingChars(t *testing.T) {
 		{
 			name: "HTML String",
 			args: args{
-				s: `<p>Paragraph 1</p>
-<p>Paragraph 2</p>
-<p>Paragraph 3</p>`,
+				s: "<p>Paragraph 1</p>{{EOL}}<p>Paragraph 2</p>{{EOL}}<p>Paragraph 3</p>",
 			},
 			want: "<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := TrimAllLineEndingChars(tt.args.s)
+			s := osBasedStr(tt.args.s)
+			got := TrimAllLineEndingChars(s)
 			require.Equal(t, tt.want, got)
 		})
 	}
