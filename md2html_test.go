@@ -29,7 +29,7 @@ const stylePathPattern string = "styles/github-%s.css"
 
 var convertTests = []convertTestArgs{
 	{
-		name: "markdownContent with full options",
+		name: "input markdown with full options",
 		input: convertInputArgs{
 			markdown: `---{{EOL}}layout: default{{EOL}}title: Post title{{EOL}}slug: post-slug{{EOL}}author: Fake Name{{EOL}}pubDate: "2022-01-01T00:00:00+07:00"{{EOL}}keywords:{{EOL}}- key word 01{{EOL}}- key word 02{{EOL}}customKey: custom value{{EOL}}customArray:{{EOL}}- element 01{{EOL}}- element 02{{EOL}}---{{EOL}}{{EOL}}Post excerpt{{EOL}}{{EOL}}<!-- more -->{{EOL}}{{EOL}}# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{
@@ -43,7 +43,7 @@ var convertTests = []convertTestArgs{
 		},
 	},
 	{
-		name: "markdownContent with full options and frontmatter has comments",
+		name: "input markdown with full options and frontmatter has comments",
 		input: convertInputArgs{
 			markdown: `---{{EOL}}# Layout name{{EOL}}layout: default{{EOL}}title: Post title # post title{{EOL}}slug: post-slug{{EOL}}author: Fake Name{{EOL}}pubDate: "2022-01-01T00:00:00+07:00"{{EOL}}keywords:{{EOL}}- key word 01{{EOL}}- key word 02{{EOL}}customKey: custom value{{EOL}}customArray:{{EOL}}- element 01{{EOL}}- element 02{{EOL}}---{{EOL}}{{EOL}}Post excerpt{{EOL}}{{EOL}}<!-- more -->{{EOL}}{{EOL}}# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{
@@ -57,7 +57,7 @@ var convertTests = []convertTestArgs{
 		},
 	},
 	{
-		name: "markdownContent without frontmatter",
+		name: "input markdown without frontmatter",
 		input: convertInputArgs{
 			markdown: `# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
 			options: Options{

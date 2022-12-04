@@ -102,5 +102,7 @@ func (c *markdownContent) html() string {
 		return ""
 	}
 
-	return strings.TrimSuffix(buf.String(), utils.EOL())
+	s := strings.TrimSuffix(buf.String(), "\n")
+
+	return strings.ReplaceAll(s, "\n", utils.EOL())
 }
