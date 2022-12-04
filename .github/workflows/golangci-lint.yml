@@ -5,6 +5,12 @@ on:
       - v*
     branches:
       - main
+    paths:
+      - ".github/workflows/golangci-lint.yml"
+      - "utils/*.go"
+      - "*.go"
+      - "go.mod"
+      - "go.sum"
   pull_request:
 permissions:
   contents: read
