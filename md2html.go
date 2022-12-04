@@ -36,9 +36,10 @@ func Convert(input []byte, options Options) (string, error) {
 	}
 
 	htmlContext := htmlTemplateContext{
-		Title: title,
-		Body:  markdownContent.html(),
-		Style: markdownStyle,
+		Title:       title,
+		Body:        markdownContent.html(),
+		Frontmatter: markdownContent.frontmatter(),
+		Style:       markdownStyle,
 	}
 
 	return render(htmlContext, options)
