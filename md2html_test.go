@@ -39,7 +39,7 @@ var convertTests = []convertTestArgs{
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 	{
@@ -53,7 +53,7 @@ var convertTests = []convertTestArgs{
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>Post title</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 	{
@@ -67,7 +67,7 @@ var convertTests = []convertTestArgs{
 			},
 		},
 		output: convertOutputArgs{
-			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>An h1 header</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
+			htmlWithoutStyle: `<html>{{EOL}}<head>{{EOL}}  <meta charset="utf-8">{{EOL}}  <meta name="viewport" content="width=device-width, initial-scale=1">{{EOL}}  <title>An h1 header</title>{{EOL}}  <style>{{.Style}}</style>{{EOL}}  <style>body { padding : 15px; }</style>{{EOL}}</head>{{EOL}}{{EOL}}<body class="markdown-body">{{EOL}}<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>{{EOL}}</body>{{EOL}}</html>{{EOL}}`,
 		},
 	},
 }

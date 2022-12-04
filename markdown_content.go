@@ -12,8 +12,8 @@ import (
 )
 
 type markdownContent struct {
-	frontmatter map[string]interface{}
-	content     string
+	meta    map[string]interface{}
+	content string
 }
 
 func newMarkdownContent(bytes []byte, excerptSeparator string) (*markdownContent, error) {
@@ -57,12 +57,16 @@ func newMarkdownContent(bytes []byte, excerptSeparator string) (*markdownContent
 	return &markdownContent{frontmatter, content}, nil
 }
 
+func (c *markdownContent) frontmatter() map[string]interface{} {
+	return c.meta
+}
+
 func (c *markdownContent) field(key string) interface{} {
 	if key == "title" {
 		return c.title()
 	}
 
-	if val, ok := c.frontmatter[key]; ok {
+	if val, ok := c.meta[key]; ok {
 		return val
 	}
 
@@ -70,7 +74,7 @@ func (c *markdownContent) field(key string) interface{} {
 }
 
 func (c *markdownContent) title() string {
-	if val, ok := c.frontmatter["title"]; ok {
+	if val, ok := c.meta["title"]; ok {
 		title, ok1 := val.(string)
 		if ok1 {
 			return title
@@ -84,7 +88,7 @@ func (c *markdownContent) markdown() string {
 	return utils.TrimBlankLines(c.content)
 }
 
-func (c *markdownContent) htmlWithIndentation(indentString string) string {
+func (c *markdownContent) html() string {
 	markdownBytes := []byte(c.content)
 	mdconv := goldmark.New(
 		goldmark.WithParserOptions(
@@ -98,11 +102,5 @@ func (c *markdownContent) htmlWithIndentation(indentString string) string {
 		return ""
 	}
 
-	s := strings.TrimSuffix(buf.String(), utils.EOL())
-
-	return utils.AppendIndentation(s, indentString)
-}
-
-func (c *markdownContent) html() string {
-	return c.htmlWithIndentation("  ")
+	return strings.TrimSuffix(buf.String(), utils.EOL())
 }

@@ -33,25 +33,6 @@ func GetFirstLine(s string) string {
 	return headingRegex.ReplaceAllString(line, "")
 }
 
-func AppendIndentation(s string, indentString string) string {
-	sc := bufio.NewScanner(strings.NewReader(s))
-	var buf strings.Builder
-	isFirstLine := true
-	for sc.Scan() {
-		if isFirstLine {
-			buf.WriteString(indentString)
-			buf.WriteString(sc.Text())
-			isFirstLine = false
-		} else {
-			buf.WriteString(EOL())
-			buf.WriteString(indentString)
-			buf.WriteString(sc.Text())
-		}
-	}
-
-	return buf.String()
-}
-
 func TrimBlankLines(s string) string {
 	lineEndingRegex := lineEndingUnixRegex
 	lineEnding := EOL()

@@ -51,7 +51,7 @@ var mdcTests = []mdcTestArgs{
 				"excerpt": "Post excerpt",
 			},
 			markdown: `# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
-			html:     `  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>`,
+			html:     `<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>`,
 		},
 	},
 	{
@@ -79,7 +79,7 @@ var mdcTests = []mdcTestArgs{
 				"excerpt": "Post excerpt",
 			},
 			markdown: `# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
-			html:     `  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>`,
+			html:     `<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>`,
 		},
 	},
 	{
@@ -92,7 +92,7 @@ var mdcTests = []mdcTestArgs{
 			title:       "An h1 header",
 			frontmatter: map[string]interface{}{},
 			markdown:    `# An h1 header{{EOL}}{{EOL}}Paragraphs are separated by a blank line.{{EOL}}`,
-			html:        `  <h1 id="an-h1-header">An h1 header</h1>{{EOL}}  <p>Paragraphs are separated by a blank line.</p>`,
+			html:        `<h1 id="an-h1-header">An h1 header</h1>{{EOL}}<p>Paragraphs are separated by a blank line.</p>`,
 		},
 	},
 }

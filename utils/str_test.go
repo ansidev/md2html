@@ -54,43 +54,6 @@ Line 2`,
 	}
 }
 
-func Test_AppendIndentation(t *testing.T) {
-	type args struct {
-		s            string
-		indentString string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			name: "String indent",
-			args: args{
-				s:            "<p>Paragraph 1</p>{{EOL}}<p>Paragraph 2</p>",
-				indentString: "  ",
-			},
-			want: "  <p>Paragraph 1</p>{{EOL}}  <p>Paragraph 2</p>",
-		},
-		{
-			name: "Tab indent",
-			args: args{
-				s:            "<p>Paragraph 1</p>{{EOL}}<p>Paragraph 2</p>",
-				indentString: "	",
-			},
-			want: "	<p>Paragraph 1</p>{{EOL}}	<p>Paragraph 2</p>",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := OSBasedStr(tt.args.s)
-			got := AppendIndentation(s, tt.args.indentString)
-			want := OSBasedStr(tt.want)
-			require.Equal(t, want, got)
-		})
-	}
-}
-
 func TestTrimBlankLines(t *testing.T) {
 	type args struct {
 		s string
